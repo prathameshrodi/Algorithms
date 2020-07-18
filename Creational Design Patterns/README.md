@@ -6,6 +6,7 @@ Creational Design Patterns as one of the simplest sets of Design Patterns.
 * Object creation can be independent of the class implementation.
 * Adding support of new type of object is very easy
 * Logic of object creation is hidden
+
 ##Creational Design Patterns Include
 
 ## 1) Singleton Design Pattern

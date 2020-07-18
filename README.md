@@ -8,4 +8,13 @@ Design Patterns In Python Language. With Explanations.
  * Abstract Factory
  * Builder 
  
+### Structural Design Patters
+ * Adapter
+ * Composite
+ * Proxy
+ * Facade
+ * Bridge
+ * Decorator
+ 
+
  
