@@ -1,0 +1,1 @@
+gunicorn -b 0.0.0.0:8080 --workers 4 --threads 100 websocket_client:app
