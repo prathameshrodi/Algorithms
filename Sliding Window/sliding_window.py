@@ -44,21 +44,24 @@ from typing import List
 
 
 class Solution:
-    def maxslidingwindow(self, nums: List[int], k: int) -> List[int]:
+    def maxslidingwindow(self, nums: List[int], max_visible_values: int) -> List[int]:
         res = []
-        l, r = 0, 0
+        length, range = 0, 0
         q = deque()
-        while r < len(nums):
+        while range < len(nums):
             # Check if 1st value in queue is smaller than the current value and remove all the value until
-            while q and nums[q[-1]] < nums[r]:
+            if q:
+                first_n = nums[q[-1]]
+                second_n = nums[range]
+            while q and nums[q[-1]] < nums[range]:
                 q.pop()
-            q.append(r)
-            if q[0] < l:
+            q.append(range)
+            if q[0] < length:
                 q.popleft()
-            if r - l + 1 == k:
+            if range - length + 1 == max_visible_values:
                 res.append(nums[q[0]])
-                l += 1
-            r += 1
+                length += 1
+            range += 1
         return res
 
 # Amazon OA

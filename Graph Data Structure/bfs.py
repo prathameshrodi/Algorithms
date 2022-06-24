@@ -7,83 +7,50 @@ __maintainer__ = "Prathamesh Rodi"
 __email__ = "prathameshrodi3009@gmail.com"
 """
 """Breadth First Search is based on Graph Traversal Algorithms"""
-from queue import Queue
 
 
-class Graph:
-    # Constructor
-    def __init__(self, num_of_nodes, directed=True):
-        self.m_num_of_nodes = num_of_nodes
-        self.m_nodes = range(self.m_num_of_nodes)
+class Traversing:
+    def __init__(self, input):
+        self._visited_dfs = set()
+        self._visited_bfs = list()
+        self._queue = list()
+        self._input = input
 
-        # Directed or Undirected
-        self.m_directed = directed
+    def bfs(self, node):
 
-        # Graph representation - Adjacency list
-        # We use a dictionary to implement an adjacency list
-        self.m_adj_list = {node: set() for node in self.m_nodes}
+        self._visited_bfs.append(node)
+        self._queue.append(node)
 
-        # Add edge to the graph
+        while self._queue:
+            m = self._queue.pop(0)
+            print(m, end=" ")
+            for neighbour in self._input[m]:
+                if neighbour not in self._visited_bfs:
+                    self._visited_bfs.append(neighbour)
+                    self._queue.append(neighbour)
 
-    def add_edge(self, node1, node2, weight=1):
-        self.m_adj_list[node1].add((node2, weight))
+    def dfs(self, node):
+        if node not in self._visited_dfs:
+            print(node, end=" ")
+            self._visited_dfs.add(node)
+            for neighbour in self._input[node]:
+                self.dfs(neighbour)
 
-        if not self.m_directed:
-            self.m_adj_list[node2].add((node1, weight))
-
-    # Print the graph representation
-    def print_adj_list(self):
-        for key in self.m_adj_list.keys():
-            print("node", key, ": ", self.m_adj_list[key])
-
-    def bfs(self, start_node, target_node):
-        # Set of visited nodes to prevent loops
-        visited = set()
-        queue = Queue()
-
-        # Add the start_node to the queue and visited list
-        queue.put(start_node)
-        visited.add(start_node)
-
-        # start_node has not parents
-        parent = dict()
-        parent[start_node] = None
-
-        # Perform step 3
-        path_found = False
-        while not queue.empty():
-            current_node = queue.get()
-            if current_node == target_node:
-                path_found = True
-                break
-
-            for (next_node, weight) in self.m_adj_list[current_node]:
-                if next_node not in visited:
-                    queue.put(next_node)
-                    parent[next_node] = current_node
-                    visited.add(next_node)
-
-        # Path reconstruction
-        path = []
-        if path_found:
-            path.append(target_node)
-            while parent[target_node] is not None:
-                path.append(parent[target_node])
-                target_node = parent[target_node]
-            path.reverse()
-        return path
 
 if __name__ == '__main__':
-    graph = Graph(6, directed=False)
-    graph.add_edge(0, 1)
-    graph.add_edge(0, 2)
-    graph.add_edge(0, 3)
-    graph.add_edge(0, 4)
-    graph.add_edge(1, 2)
-    graph.add_edge(2, 3)
-    graph.add_edge(2, 5)
-    graph.add_edge(3, 4)
-    graph.add_edge(3, 5)
-    graph.add_edge(4, 5)
-    graph.print_adj_list()
-    path = graph.bfs(0, 5)
+    graph = {
+        '5': ['3', '7'],
+        '3': ['2', '4'],
+        '7': ['8'],
+        '2': [],
+        '4': ['8'],
+        '8': []
+    }
+    t = Traversing(graph)
+    print('\n********************************************************************')
+    print("Following is the Breadth-First Search", end='\n')
+    t.bfs('5')
+    print('\n********************************************************************')
+    print("Following is the Depth-First Search", end='\n')
+    t.dfs('5')
+    print('\n********************************************************************')
