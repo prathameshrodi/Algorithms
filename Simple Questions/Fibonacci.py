@@ -14,3 +14,5 @@ def fib(n):
         n -= 1
     return a
 
+if __name__ == '__main__':
+    print(fib(1))
